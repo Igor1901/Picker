@@ -9,7 +9,7 @@ import UIKit
 
 class ViewController2: UIViewController {
     
-    private let addButton = UIBarButtonItem(barButtonSystemItem: .add , target: self, action: #selector(addButtonTapped))
+    private lazy var addButton = UIBarButtonItem(barButtonSystemItem: .add , target: self, action: #selector(addButtonTapped))
     
     override func viewDidLoad() {
         super.viewDidLoad()
