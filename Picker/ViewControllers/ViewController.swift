@@ -172,25 +172,6 @@ class ViewController: UIViewController {
         passwordTextField.isSecureTextEntry.toggle()
     }
 
-    
-    class CustomButton: UIButton {
-        var firstImage: UIImage?
-        var secondImage: UIImage?
-
-        var isToggledOn = false {
-            didSet {
-                if isToggledOn {
-                    self.setImage(secondImage, for: .normal)
-                } else {
-                    self.setImage(firstImage, for: .normal)
-                }
-            }
-        }
-
-        func toggle() {
-            isToggledOn.toggle()
-        }
-    }
 
     @objc func entryButton(){
         let secondController = ViewController2()

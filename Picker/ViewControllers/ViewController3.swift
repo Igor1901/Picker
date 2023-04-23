@@ -41,12 +41,17 @@ class ViewController3: UIViewController {
         picker1Label.text = "Дата"
         picker1Label.textColor = colorForLabels
         picker1Label.font = UIFont.boldSystemFont(ofSize: 16)
+        
+        picker1.dataSource = self
+        picker1.delegate = self
+        
     }
 
     private func addSubviews(){
         view.addSubview(nameLabel)
         view.addSubview(nameTextField)
         view.addSubview(picker1Label)
+        view.addSubview(picker1)
     }
     
     private func setConstraints(){
@@ -70,10 +75,35 @@ class ViewController3: UIViewController {
         }
         
         picker1Label.snp.makeConstraints { make in
-            make.left.right.equalToSuperview().inset(50)
+            make.left.equalToSuperview().inset(50)
             make.top.equalTo(nameUnderlineView.snp.bottom).offset(25)
+        }
+        
+        picker1.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.width.equalToSuperview().inset(50)
+            //make.height.equalTo(40)
+            make.top.equalTo(picker1Label.snp.bottom).offset(25)
         }
         
     }
 
+}
+
+extension ViewController3: UIPickerViewDataSource {
+    // Сколько компонентов выводить
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    //Сколько строк в компоненте
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return 10
+    }
+}
+
+extension ViewController3: UIPickerViewDelegate {
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        let result = "\(row)"
+        return result
+    }
 }
