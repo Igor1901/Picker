@@ -14,7 +14,7 @@ class ViewController3: UIViewController {
     private let nameTextField = UITextField()
     private let nameUnderlineView = UIView()
     private let picker1Label = UILabel()
-    private let picker1 = UIPickerView()
+    private let picker1 = PickerTextField()
     private let picker1UnderlineView = UIView()
     
     override func viewDidLoad() {
@@ -35,15 +35,15 @@ class ViewController3: UIViewController {
         nameTextField.borderStyle = .none
         nameTextField.placeholder = "Введите имя"
         nameTextField.addSubview(nameUnderlineView)
-        
         nameUnderlineView.backgroundColor = colorForUnderline
         
-        picker1Label.text = "Дата"
+        picker1Label.text = "Эмоциональное состояние"
         picker1Label.textColor = colorForLabels
         picker1Label.font = UIFont.boldSystemFont(ofSize: 16)
         
-        picker1.dataSource = self
-        picker1.delegate = self
+        picker1.addSubview(picker1UnderlineView)
+        picker1.placeholder = "Нормально / тревога / грустно"
+        picker1UnderlineView.backgroundColor = colorForUnderline
         
     }
 
@@ -82,10 +82,16 @@ class ViewController3: UIViewController {
         picker1.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.width.equalToSuperview().inset(50)
-            //make.height.equalTo(40)
-            make.top.equalTo(picker1Label.snp.bottom).offset(25)
+            make.height.equalTo(40)
+            make.top.equalTo(picker1Label.snp.bottom).offset(10)
         }
-        
+     
+        picker1UnderlineView.snp.makeConstraints { make in
+            make.bottom.equalToSuperview()
+            make.height.equalTo(1)
+            make.left.equalToSuperview()
+            make.right.equalToSuperview()
+        }
     }
 
 }
