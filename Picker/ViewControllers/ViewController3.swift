@@ -16,6 +16,15 @@ class ViewController3: UIViewController {
     private let picker1Label = UILabel()
     private let picker1 = PickerTextField()
     private let picker1UnderlineView = UIView()
+    private let picker2Label = UILabel()
+    private let picker2 = PickerTextField()
+    private let picker2UnderlineView = UIView()
+    private let picker3Label = UILabel()
+    private let picker3 = PickerTextField()
+    private let picker3UnderlineView = UIView()
+    private let picker4Label = UILabel()
+    private let picker4 = UITextField()
+    private let picker4UnderlineView = UIView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,13 +46,37 @@ class ViewController3: UIViewController {
         nameTextField.addSubview(nameUnderlineView)
         nameUnderlineView.backgroundColor = colorForUnderline
         
-        picker1Label.text = "Эмоциональное состояние"
+        picker1Label.text = "Дата"
         picker1Label.textColor = colorForLabels
         picker1Label.font = UIFont.boldSystemFont(ofSize: 16)
         
+        picker1.placeholder = "Введите дату"
         picker1.addSubview(picker1UnderlineView)
-        picker1.placeholder = "Нормально / тревога / грустно"
         picker1UnderlineView.backgroundColor = colorForUnderline
+        
+        picker2Label.text = "Возраст"
+        picker2Label.textColor = colorForLabels
+        picker2Label.font = UIFont.boldSystemFont(ofSize: 16)
+        
+        picker2.placeholder = "Добавить"
+        picker2.addSubview(picker2UnderlineView)
+        picker2UnderlineView.backgroundColor = colorForUnderline
+        
+        picker3Label.text = "Пол"
+        picker3Label.textColor = colorForLabels
+        picker3Label.font = UIFont.boldSystemFont(ofSize: 16)
+        
+        picker3.placeholder = "Добавить"
+        picker3.addSubview(picker3UnderlineView)
+        picker3UnderlineView.backgroundColor = colorForUnderline
+        
+        picker4Label.text = "Instagram"
+        picker4Label.textColor = colorForLabels
+        picker4Label.font = UIFont.boldSystemFont(ofSize: 16)
+        
+        picker4.placeholder = "Добавить"
+        picker4.addSubview(picker4UnderlineView)
+        picker4UnderlineView.backgroundColor = colorForUnderline
         
     }
 
@@ -52,6 +85,12 @@ class ViewController3: UIViewController {
         view.addSubview(nameTextField)
         view.addSubview(picker1Label)
         view.addSubview(picker1)
+        view.addSubview(picker2Label)
+        view.addSubview(picker2)
+        view.addSubview(picker3Label)
+        view.addSubview(picker3)
+        view.addSubview(picker4Label)
+        view.addSubview(picker4)
     }
     
     private func setConstraints(){
@@ -76,7 +115,7 @@ class ViewController3: UIViewController {
         
         picker1Label.snp.makeConstraints { make in
             make.left.equalToSuperview().inset(50)
-            make.top.equalTo(nameUnderlineView.snp.bottom).offset(25)
+            make.top.equalTo(nameUnderlineView.snp.bottom).offset(10)
         }
         
         picker1.snp.makeConstraints { make in
@@ -92,24 +131,54 @@ class ViewController3: UIViewController {
             make.left.equalToSuperview()
             make.right.equalToSuperview()
         }
+        picker2Label.snp.makeConstraints { make in
+            make.left.equalToSuperview().inset(50)
+            make.top.equalTo(picker1UnderlineView.snp.bottom).offset(10)
+        }
+        picker2.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.width.equalToSuperview().inset(50)
+            make.height.equalTo(40)
+            make.top.equalTo(picker2Label.snp.bottom).offset(10)
+        }
+        picker2UnderlineView.snp.makeConstraints { make in
+            make.bottom.equalToSuperview()
+            make.height.equalTo(1)
+            make.left.right.equalToSuperview()
+        }
+        
+        picker3Label.snp.makeConstraints { make in
+            make.left.equalToSuperview().inset(50)
+            make.top.equalTo(picker2UnderlineView.snp.bottom).offset(10)
+        }
+        picker3.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.width.equalToSuperview().inset(50)
+            make.height.equalTo(40)
+            make.top.equalTo(picker3Label.snp.bottom).offset(10)
+        }
+        picker3UnderlineView.snp.makeConstraints { make in
+            make.bottom.equalToSuperview()
+            make.height.equalTo(1)
+            make.left.right.equalToSuperview()
+        }
+        
+        picker4Label.snp.makeConstraints { make in
+            make.left.equalToSuperview().inset(50)
+            make.top.equalTo(picker3UnderlineView.snp.bottom).offset(10)
+        }
+        picker4.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.width.equalToSuperview().inset(50)
+            make.height.equalTo(40)
+            make.top.equalTo(picker4Label.snp.bottom).offset(10)
+        }
+        picker4UnderlineView.snp.makeConstraints { make in
+            make.bottom.equalToSuperview()
+            make.height.equalTo(1)
+            make.left.right.equalToSuperview()
+        }
     }
 
 }
 
-extension ViewController3: UIPickerViewDataSource {
-    // Сколько компонентов выводить
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    //Сколько строк в компоненте
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return 10
-    }
-}
-
-extension ViewController3: UIPickerViewDelegate {
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        let result = "\(row)"
-        return result
-    }
-}

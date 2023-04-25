@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import SnapKit
+
 
 class PickerTextField: UITextField, UIPickerViewDelegate, UIPickerViewDataSource {
     
