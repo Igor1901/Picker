@@ -10,6 +10,8 @@ import SnapKit
 
 class ViewController3: UIViewController {
 
+    private let profileImageView = UIImageView()
+    private let selectPhotoButton = UIButton()
     private let nameLabel = UILabel()
     private let nameTextField = UITextField()
     private let nameUnderlineView = UIView()
@@ -33,9 +35,29 @@ class ViewController3: UIViewController {
         addSubviews()
         setConstraints()
     }
+    
+    override func viewDidLayoutSubviews() {
+        profileImageView.layer.cornerRadius = profileImageView.bounds.width / 2.0
+    }
+    
     private func configureUI(){
         let colorForLabels = UIColor(red: 173/255, green: 194/255, blue: 239/255, alpha: 1)
         let colorForUnderline = UIColor(red: 232/255, green: 232/255, blue: 232/255, alpha: 1)
+        
+        // Set the image view's properties
+        profileImageView.contentMode = .scaleAspectFill
+        profileImageView.layer.masksToBounds = true
+        profileImageView.clipsToBounds = true
+        //profileImageView.layer.cornerRadius = profileImageView.bounds.width / 2.0 // Set the corner radius to half the width to make it a circle
+        profileImageView.layer.borderColor = UIColor.gray.cgColor
+        profileImageView.layer.borderWidth = 1.0
+        
+        // Add a button for selecting a photo
+        selectPhotoButton.setTitle("Select Photo", for: .normal)
+        selectPhotoButton.setTitleColor(.blue, for: .normal)
+        selectPhotoButton.addTarget(self, action: #selector(selectPhotoButtonTapped), for: .touchUpInside)
+
+
         
         nameLabel.text = "Имя"
         nameLabel.textColor = colorForLabels
@@ -81,6 +103,8 @@ class ViewController3: UIViewController {
     }
 
     private func addSubviews(){
+        view.addSubview(profileImageView)
+        view.addSubview(selectPhotoButton)
         view.addSubview(nameLabel)
         view.addSubview(nameTextField)
         view.addSubview(picker1Label)
@@ -94,6 +118,19 @@ class ViewController3: UIViewController {
     }
     
     private func setConstraints(){
+        
+        profileImageView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalToSuperview().inset(100)
+            make.width.equalTo(150)
+            make.height.equalTo(profileImageView.snp.width)
+        }
+
+        selectPhotoButton.snp.makeConstraints { make in
+            make.top.equalTo(profileImageView.snp.bottom).offset(10)
+            make.centerX.equalToSuperview()
+        }
+
         nameLabel.snp.makeConstraints { make in
             make.left.equalToSuperview().inset(50)
             make.top.equalToSuperview().inset(250)
@@ -179,6 +216,27 @@ class ViewController3: UIViewController {
             make.left.right.equalToSuperview()
         }
     }
+    
+    @objc private func selectPhotoButtonTapped() {
+            // Show the image picker controller to select a photo
+            let imagePickerController = UIImagePickerController()
+            imagePickerController.delegate = self
+            imagePickerController.sourceType = .photoLibrary
+            present(imagePickerController, animated: true, completion: nil)
+        }
 
 }
 
+extension ViewController3: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let selectedImage = info[.originalImage] as? UIImage {
+            profileImageView.image = selectedImage
+        }
+        picker.dismiss(animated: true, completion: nil)
+    }
+
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
+}
