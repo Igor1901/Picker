@@ -9,6 +9,7 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    let imageView = UIImageView()
     private let signInLabel = UILabel()
     private let emailLabel = UILabel()
     private let emailTextField = UITextField()
@@ -33,6 +34,9 @@ class ViewController: UIViewController {
     
     private func configureUI(){
         
+        imageView.image = UIImage(named: "birthday_reminder_logo")
+        imageView.contentMode = .scaleAspectFit
+        view.addSubview(imageView)
         
         myButton.firstImage = UIImage(named: "eye_slash")
         myButton.secondImage = UIImage(named: "eye")
@@ -83,6 +87,7 @@ class ViewController: UIViewController {
     }
     
     private func addSubviews(){
+        view.addSubview(imageView)
         view.addSubview(signInLabel)
         view.addSubview(emailLabel)
         view.addSubview(emailTextField)
@@ -95,6 +100,14 @@ class ViewController: UIViewController {
     }
     
     private func setConstraints(){
+        
+        imageView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalToSuperview().inset(95)
+            make.width.equalTo(140)
+            make.height.equalTo(imageView.snp.width)
+        }
+        
         signInLabel.snp.makeConstraints { make in
             make.left.equalToSuperview().inset(50)
             make.top.equalToSuperview().inset(250)

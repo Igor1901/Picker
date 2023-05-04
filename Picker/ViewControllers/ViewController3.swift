@@ -10,45 +10,63 @@ import SnapKit
 
 class ViewController3: UIViewController {
 
+    
     private let profileImageView = UIImageView()
     private let selectPhotoButton = UIButton()
     private let nameLabel = UILabel()
     private let nameTextField = UITextField()
     private let nameUnderlineView = UIView()
     private let picker1Label = UILabel()
-    private let picker1 = PickerTextField()
+    private let dateTextField = UITextField()
     private let picker1UnderlineView = UIView()
     private let picker2Label = UILabel()
-    private let picker2 = PickerTextField()
+    private let ageTextField = PickerTextField()
     private let picker2UnderlineView = UIView()
     private let picker3Label = UILabel()
-    private let picker3 = PickerTextField()
+    private let genderTextField = PickerTextField()
     private let picker3UnderlineView = UIView()
     private let picker4Label = UILabel()
     private let picker4 = UITextField()
     private let picker4UnderlineView = UIView()
     
+    
+    var dateOfBirthdayPicker = UIDatePicker()
+    var agePicker = UIPickerView()
+    var genderPicker = UIPickerView()
+    let genders = ["Мужчина","Женщина"]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        navigationController?.navigationBar.isHidden = false
+        
+        let navBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 32))
+        let navItem = UINavigationItem(title: "Friend")
+        let closeButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(closeButtonTapped))
+        let addButton = UIBarButtonItem(barButtonSystemItem: .add , target: self, action: #selector(addButtonTapped))
+        navItem.leftBarButtonItem = closeButton
+        navItem.rightBarButtonItem = addButton
+        navBar.setItems([navItem], animated: false)
+        view.addSubview(navBar)
+        
         configureUI()
         addSubviews()
         setConstraints()
     }
     
     override func viewDidLayoutSubviews() {
-        profileImageView.layer.cornerRadius = profileImageView.bounds.width / 2.0
+        profileImageView.layer.cornerRadius = profileImageView.bounds.width / 2.0 // Set the corner radius to half the width to make it a circle
     }
     
     private func configureUI(){
         let colorForLabels = UIColor(red: 173/255, green: 194/255, blue: 239/255, alpha: 1)
         let colorForUnderline = UIColor(red: 232/255, green: 232/255, blue: 232/255, alpha: 1)
         
+        
         // Set the image view's properties
         profileImageView.contentMode = .scaleAspectFill
         profileImageView.layer.masksToBounds = true
         profileImageView.clipsToBounds = true
-        //profileImageView.layer.cornerRadius = profileImageView.bounds.width / 2.0 // Set the corner radius to half the width to make it a circle
         profileImageView.layer.borderColor = UIColor.gray.cgColor
         profileImageView.layer.borderWidth = 1.0
         
@@ -72,24 +90,39 @@ class ViewController3: UIViewController {
         picker1Label.textColor = colorForLabels
         picker1Label.font = UIFont.boldSystemFont(ofSize: 16)
         
-        picker1.placeholder = "Введите дату"
-        picker1.addSubview(picker1UnderlineView)
+        dateTextField.placeholder = "Введите дату"
+        dateTextField.inputView = dateOfBirthdayPicker
+        dateOfBirthdayPicker.preferredDatePickerStyle = .wheels
+        dateOfBirthdayPicker.locale = .init(identifier: "Russian")
+        dateTextField.addSubview(picker1UnderlineView)
         picker1UnderlineView.backgroundColor = colorForUnderline
+        datePicketParam()
+        
+        createPicker()
+        
+        genderPicker.tag = 0
+        agePicker.tag = 1
         
         picker2Label.text = "Возраст"
         picker2Label.textColor = colorForLabels
         picker2Label.font = UIFont.boldSystemFont(ofSize: 16)
         
-        picker2.placeholder = "Добавить"
-        picker2.addSubview(picker2UnderlineView)
+        ageTextField.placeholder = "Добавить"
+        ageTextField.inputView = agePicker
+        agePicker.delegate = self
+        agePicker.dataSource = self
+        ageTextField.addSubview(picker2UnderlineView)
         picker2UnderlineView.backgroundColor = colorForUnderline
         
         picker3Label.text = "Пол"
         picker3Label.textColor = colorForLabels
         picker3Label.font = UIFont.boldSystemFont(ofSize: 16)
         
-        picker3.placeholder = "Добавить"
-        picker3.addSubview(picker3UnderlineView)
+        genderTextField.placeholder = "Добавить"
+        genderTextField.inputView = genderPicker
+        genderPicker.dataSource = self
+        genderPicker.delegate = self
+        genderTextField.addSubview(picker3UnderlineView)
         picker3UnderlineView.backgroundColor = colorForUnderline
         
         picker4Label.text = "Instagram"
@@ -108,21 +141,22 @@ class ViewController3: UIViewController {
         view.addSubview(nameLabel)
         view.addSubview(nameTextField)
         view.addSubview(picker1Label)
-        view.addSubview(picker1)
+        view.addSubview(dateTextField)
         view.addSubview(picker2Label)
-        view.addSubview(picker2)
+        view.addSubview(ageTextField)
         view.addSubview(picker3Label)
-        view.addSubview(picker3)
+        view.addSubview(genderTextField)
         view.addSubview(picker4Label)
         view.addSubview(picker4)
     }
     
     private func setConstraints(){
         
+        
         profileImageView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalToSuperview().inset(100)
-            make.width.equalTo(150)
+            make.top.equalToSuperview().inset(95)
+            make.width.equalTo(140)
             make.height.equalTo(profileImageView.snp.width)
         }
 
@@ -133,7 +167,7 @@ class ViewController3: UIViewController {
 
         nameLabel.snp.makeConstraints { make in
             make.left.equalToSuperview().inset(50)
-            make.top.equalToSuperview().inset(250)
+            make.top.equalToSuperview().inset(300)
         }
         
         nameTextField.snp.makeConstraints { make in
@@ -155,7 +189,7 @@ class ViewController3: UIViewController {
             make.top.equalTo(nameUnderlineView.snp.bottom).offset(10)
         }
         
-        picker1.snp.makeConstraints { make in
+        dateTextField.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.width.equalToSuperview().inset(50)
             make.height.equalTo(40)
@@ -172,7 +206,7 @@ class ViewController3: UIViewController {
             make.left.equalToSuperview().inset(50)
             make.top.equalTo(picker1UnderlineView.snp.bottom).offset(10)
         }
-        picker2.snp.makeConstraints { make in
+        ageTextField.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.width.equalToSuperview().inset(50)
             make.height.equalTo(40)
@@ -188,7 +222,7 @@ class ViewController3: UIViewController {
             make.left.equalToSuperview().inset(50)
             make.top.equalTo(picker2UnderlineView.snp.bottom).offset(10)
         }
-        picker3.snp.makeConstraints { make in
+        genderTextField.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.width.equalToSuperview().inset(50)
             make.height.equalTo(40)
@@ -217,6 +251,16 @@ class ViewController3: UIViewController {
         }
     }
     
+    
+    
+    @objc func addButtonTapped() {
+       
+    }
+    
+    @objc func closeButtonTapped() {
+        dismiss(animated: true, completion: nil)
+    }
+    
     @objc private func selectPhotoButtonTapped() {
             // Show the image picker controller to select a photo
             let imagePickerController = UIImagePickerController()
@@ -224,6 +268,44 @@ class ViewController3: UIViewController {
             imagePickerController.sourceType = .photoLibrary
             present(imagePickerController, animated: true, completion: nil)
         }
+    func datePicketParam () {
+        // создаем тул бар
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        //создаем бар баттон
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(doneDateAction))
+        toolbar.setItems([doneButton], animated: true)
+        //добавляем тул бар
+        dateTextField.inputAccessoryView = toolbar
+        dateOfBirthdayPicker.datePickerMode = .date
+    }
+    
+    func createPicker() {
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(doneAction))
+        toolbar.setItems([doneButton], animated: true)
+        
+        ageTextField.inputAccessoryView = toolbar
+        genderTextField.inputAccessoryView = toolbar
+    }
+    
+    @objc func doneDateAction () {
+        //выбираем формат
+        let formatter = DateFormatter()
+        formatter.dateStyle = .long
+        formatter.timeStyle = .none
+
+        dateTextField.text = formatter.string(from: dateOfBirthdayPicker.date)
+        //убрать пикер по кнопке done
+        view.endEditing(true)
+    }
+    
+    @objc func doneAction(){
+        // убрать пикер по кнопке
+        view.endEditing(true)
+    }
 
 }
 
@@ -238,5 +320,39 @@ extension ViewController3: UIImagePickerControllerDelegate, UINavigationControll
 
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension ViewController3: UIPickerViewDataSource {
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        switch pickerView.tag {
+        case 0: return genders.count
+        case 1: return 100
+        default: return 0
+        }
+    }
+}
+
+extension ViewController3: UIPickerViewDelegate {
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        switch pickerView.tag {
+        case 0: return genders[row]
+        case 1: return "\(row + 1)"
+        default: return nil
+        }
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        switch pickerView.tag {
+        case 0: genderTextField.text = genders[row]
+        case 1: ageTextField.text = "\(row + 1)"
+        default: return
+        }
     }
 }

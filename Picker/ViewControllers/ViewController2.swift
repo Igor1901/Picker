@@ -38,8 +38,9 @@ class ViewController2: UIViewController {
     
     @objc func addButtonTapped() {
         let thirdVC = ViewController3()
-        navigationController?.pushViewController(thirdVC, animated: true)
-        
+        thirdVC.modalPresentationStyle = .formSheet
+        present(thirdVC, animated: true, completion: nil)
+        //navigationController?.pushViewController(thirdVC, animated: true)
     }
    
 }
