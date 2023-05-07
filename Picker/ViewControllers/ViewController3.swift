@@ -8,9 +8,11 @@
 import UIKit
 import SnapKit
 
+    
+
 class ViewController3: UIViewController {
 
-    
+    weak var delegate: ViewController2?
     private let profileImageView = UIImageView()
     private let selectPhotoButton = UIButton()
     private let nameLabel = UILabel()
@@ -20,10 +22,10 @@ class ViewController3: UIViewController {
     private let dateTextField = UITextField()
     private let picker1UnderlineView = UIView()
     private let picker2Label = UILabel()
-    private let ageTextField = PickerTextField()
+    private let ageTextField = UITextField()
     private let picker2UnderlineView = UIView()
     private let picker3Label = UILabel()
-    private let genderTextField = PickerTextField()
+    private let genderTextField = UITextField()
     private let picker3UnderlineView = UIView()
     private let picker4Label = UILabel()
     private let picker4 = UITextField()
@@ -43,7 +45,7 @@ class ViewController3: UIViewController {
         let navBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 32))
         let navItem = UINavigationItem(title: "Friend")
         let closeButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(closeButtonTapped))
-        let addButton = UIBarButtonItem(barButtonSystemItem: .add , target: self, action: #selector(addButtonTapped))
+        lazy var addButton = UIBarButtonItem(barButtonSystemItem: .add , target: self, action: #selector(addButtonTapped))
         navItem.leftBarButtonItem = closeButton
         navItem.rightBarButtonItem = addButton
         navBar.setItems([navItem], animated: false)
@@ -131,6 +133,7 @@ class ViewController3: UIViewController {
         
         picker4.placeholder = "Добавить"
         picker4.addSubview(picker4UnderlineView)
+        picker4.addTarget(self, action: #selector(instAlert), for: .editingDidBegin)
         picker4UnderlineView.backgroundColor = colorForUnderline
         
     }
@@ -251,10 +254,47 @@ class ViewController3: UIViewController {
         }
     }
     
+    func errorAlert(title: String, message: String, style: UIAlertController.Style){
+            let alertController = UIAlertController(title: title, message: message, preferredStyle: style)
+            
+            let action = UIAlertAction(title: "OK", style: .default) { (action) in
+        
+            }
+            alertController.addAction(action)
+            self.present(alertController, animated: true, completion: nil)
+        }
     
+    @objc func instAlert(){
+       
+       let alertController = UIAlertController(title: "Введите username Instagram", message: "", preferredStyle: .alert)
+           
+           let action = UIAlertAction(title: "OK", style: .default) { (action) in
+               if self.picker4.text == ""{
+                   self.picker4.text = alertController.textFields?.first?.text
+               }
+           }
+       let cancel = UIAlertAction(title: "Отмена", style: .default)
+       
+           alertController.addTextField(configurationHandler: nil)
+           alertController.addAction(cancel)
+           alertController.addAction(action)
+           self.present(alertController, animated: true, completion: nil)
+       }
     
     @objc func addButtonTapped() {
-       
+
+        
+        if self.nameTextField.text == "" || self.ageTextField.text == "" || self.dateTextField.text == "" || self.genderTextField.text == "" ||
+            self.picker4.text == "" {
+            self.errorAlert(title: "Ошибка", message: "Введены не корректные данные", style: .alert)
+        } else {
+            delegate?.update(name: nameTextField.text!, age: ageTextField.text!, date: dateTextField.text!, photo: profileImageView.image!)
+            
+           
+            self.dismiss(animated: true)
+        }
+        
+        
     }
     
     @objc func closeButtonTapped() {
@@ -262,11 +302,11 @@ class ViewController3: UIViewController {
     }
     
     @objc private func selectPhotoButtonTapped() {
-            // Show the image picker controller to select a photo
-            let imagePickerController = UIImagePickerController()
-            imagePickerController.delegate = self
-            imagePickerController.sourceType = .photoLibrary
-            present(imagePickerController, animated: true, completion: nil)
+        // Show the image picker controller to select a photo
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        imagePickerController.sourceType = .photoLibrary
+        present(imagePickerController, animated: true, completion: nil)
         }
     func datePicketParam () {
         // создаем тул бар

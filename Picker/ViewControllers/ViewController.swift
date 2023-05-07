@@ -6,6 +6,7 @@
 //
 import SnapKit
 import UIKit
+import LocalAuthentication
 
 class ViewController: UIViewController {
     
@@ -58,6 +59,7 @@ class ViewController: UIViewController {
         
         emailTextField.borderStyle = .none
         emailTextField.addSubview(underlineView)
+        emailTextField.placeholder = "example@gmail.com"
         
         underlineView.backgroundColor = colorForUnderline
         
@@ -68,12 +70,15 @@ class ViewController: UIViewController {
         passwordTextField.borderStyle = .none
         passwordTextField.addSubview(underlineView2)
         passwordTextField.isSecureTextEntry = true
+        passwordTextField.placeholder = "*******"
         
         underlineView2.backgroundColor = colorForUnderline
         
         switchLabel.text = "Вход по Face ID"
         switchLabel.textColor = .black
         switchLabel.font = UIFont.boldSystemFont(ofSize: 16)
+        
+
         
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = UIColor(red: 84/255, green: 118/255, blue: 171/255, alpha: 1)
@@ -185,10 +190,21 @@ class ViewController: UIViewController {
         passwordTextField.isSecureTextEntry.toggle()
     }
 
+    
+
+    
 
     @objc func entryButton(){
-        let secondController = ViewController2()
-        navigationController?.pushViewController(secondController, animated: true)
+        
+        if emailTextField.text!.isEmpty || passwordTextField.text!.isEmpty{
+            let alert = UIAlertController(title: "Внимание", message: "Заполните данные верно", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ок", style: .cancel))
+            self.present(alert, animated: true, completion: nil)
+        } else {
+            let secondController = ViewController2()
+            navigationController?.pushViewController(secondController, animated: true)
+        }
+        
     }
     
 }

@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		03735061302E817E6429A860 /* Pods_Picker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71B1C1F8DB4453FEBFA49933 /* Pods_Picker.framework */; };
 		F132336529F5CB3900EB06E3 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F132336429F5CB3900EB06E3 /* CustomButton.swift */; };
-		F132336729F5FDC200EB06E3 /* PickerTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F132336629F5FDC200EB06E3 /* PickerTextField.swift */; };
 		F1A9979D29D200AD00134916 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A9979C29D200AD00134916 /* AppDelegate.swift */; };
 		F1A9979F29D200AD00134916 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A9979E29D200AD00134916 /* SceneDelegate.swift */; };
 		F1A997A129D200AD00134916 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A997A029D200AD00134916 /* ViewController.swift */; };
@@ -25,7 +24,6 @@
 		71B1C1F8DB4453FEBFA49933 /* Pods_Picker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Picker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7A3E8C33F2B9B8D702E9C58 /* Pods-Picker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Picker.release.xcconfig"; path = "Target Support Files/Pods-Picker/Pods-Picker.release.xcconfig"; sourceTree = "<group>"; };
 		F132336429F5CB3900EB06E3 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
-		F132336629F5FDC200EB06E3 /* PickerTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerTextField.swift; sourceTree = "<group>"; };
 		F1A9979929D200AD00134916 /* Picker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Picker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F1A9979C29D200AD00134916 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F1A9979E29D200AD00134916 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -106,7 +104,6 @@
 				F1A997B029D4A7CD00134916 /* ViewController2.swift */,
 				F1A997B229D4A7EB00134916 /* ViewController3.swift */,
 				F132336429F5CB3900EB06E3 /* CustomButton.swift */,
-				F132336629F5FDC200EB06E3 /* PickerTextField.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -230,7 +227,6 @@
 				F1A997A129D200AD00134916 /* ViewController.swift in Sources */,
 				F132336529F5CB3900EB06E3 /* CustomButton.swift in Sources */,
 				F1A997B129D4A7CD00134916 /* ViewController2.swift in Sources */,
-				F132336729F5FDC200EB06E3 /* PickerTextField.swift in Sources */,
 				F1A9979D29D200AD00134916 /* AppDelegate.swift in Sources */,
 				F1A9979F29D200AD00134916 /* SceneDelegate.swift in Sources */,
 			);
